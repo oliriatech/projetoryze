@@ -138,8 +138,8 @@ export default function TermosPage() {
       <Section title="12. Contato">
         <p>
           Dúvidas sobre estes Termos podem ser enviadas para{" "}
-          <a href="mailto:contato@ryze.com.br" className="text-accent-600 underline underline-offset-2 dark:text-accent-400">
-            contato@ryze.com.br
+          <a href="mailto:contato@ryzerh.com.br" className="text-accent-600 underline underline-offset-2 dark:text-accent-400">
+            contato@ryzerh.com.br
           </a>
           .
         </p>

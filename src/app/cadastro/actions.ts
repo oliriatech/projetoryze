@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getStripeClient } from "@/lib/stripe/server";
 import { getPlan } from "@/lib/plans";
+import { createCadastroTalentPoolEntry } from "@/lib/talent-pool";
 
 export interface SignupState {
   status: "idle" | "success" | "error" | "email_exists";
@@ -47,17 +48,28 @@ export async function signUp(
   }
 
   let userId: string | undefined;
+  const baseUrl = await getBaseUrl();
 
   try {
     const supabase = await getSupabaseServerClient();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: name, plan: planSlug } },
+      options: {
+        data: { full_name: name, plan: planSlug },
+        // Sem isso, o link do e-mail de confirmação cai no "Site URL"
+        // configurado no Supabase (a home) em vez de levar direto pro
+        // login — precisa também estar na allow-list de "Redirect URLs"
+        // em Authentication → URL Configuration no painel do Supabase.
+        emailRedirectTo: `${baseUrl}/login`,
+      },
     });
     if (error) {
-      // Com confirmação de e-mail desligada (caso deste projeto), e-mail
-      // duplicado vem como erro explícito.
+      // Com confirmação de e-mail desligada, e-mail duplicado vem como erro
+      // explícito. (Confirmado em 2026-07-28 que a confirmação está LIGADA
+      // neste projeto — ao contrário do que este comentário dizia antes —
+      // então na prática é o branch de `identities: []` abaixo que trata
+      // isso. Mantido por robustez a ambos os modos.)
       if (/already registered|already exists|user_already_exists/i.test(error.message)) {
         return { status: "email_exists", email, message: "Esse e-mail já tem uma conta na Ryze." };
       }
@@ -78,6 +90,13 @@ export async function signUp(
       message:
         "Não foi possível criar a conta agora. Tente novamente em instantes.",
     };
+  }
+
+  // Todo cadastro — gratuito ou pago — entra no banco de talentos (ver
+  // seção 12 dos Termos de Uso, aceitos acima). Best-effort: nunca deve
+  // impedir a criação da conta.
+  if (userId) {
+    await createCadastroTalentPoolEntry(userId, name, email);
   }
 
   const plan = getPlan(planSlug);
@@ -101,7 +120,6 @@ export async function signUp(
 
     try {
       const stripe = getStripeClient();
-      const baseUrl = await getBaseUrl();
       const session = await stripe.checkout.sessions.create({
         mode: "subscription",
         line_items: [{ price: priceId, quantity: 1 }],
@@ -136,9 +154,9 @@ export async function signUp(
     redirect(checkoutUrl);
   }
 
-  // Plano Grátis: manda direto pro painel — como o candidato ainda não tem
-  // perfil, o painel encaminha automaticamente pro "Preencher perfil" (o
-  // único formulário de entrada agora), que libera o link do grupo de
-  // WhatsApp ao final.
-  redirect("/para-candidatos/painel/curriculo");
+  // Plano Grátis: manda pro hub — mostra todas as ferramentas/planos com o
+  // Currículo com IA já destacado como disponível, em vez de pular direto
+  // pro formulário de perfil (pedido do cliente em 2026-07-28: a primeira
+  // tela precisa deixar claro o que existe além do que o Grátis já libera).
+  redirect("/para-candidatos/painel");
 }

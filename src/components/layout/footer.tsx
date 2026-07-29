@@ -16,8 +16,8 @@ const columns = [
   {
     title: "Produtos",
     links: [
-      { label: "Recrutamento com IA", href: "/produtos/recrutamento-ia" },
-      { label: "Educação Corporativa", href: "/produtos/educacao-corporativa" },
+      { label: "Ryze Academy", href: "/produtos/academy" },
+      { label: "Cultura & Engajamento", href: "/produtos/cultura" },
     ],
   },
   {
@@ -69,7 +69,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-border pt-8 sm:flex-row sm:items-center">
-          <Logo size="sm" showTagline />
+          <Logo size="sm" showTagline tone="dark-bg" />
 
           <div className="flex items-center gap-4">
             <a

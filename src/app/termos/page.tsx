@@ -18,12 +18,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export default function TermosPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16 lg:px-8">
-      <div className="rounded-lg border border-error/40 bg-error/10 p-4 text-body-sm text-error">
-        ⚠️ RASCUNHO — revisar com advogado antes do lançamento público. Gerado como ponto de
-        partida, não é aconselhamento jurídico.
-      </div>
-
-      <h1 className="mt-8 font-display text-display-md font-semibold text-fg">Termos de Uso</h1>
+      <h1 className="font-display text-display-md font-semibold text-fg">Termos de Uso</h1>
       <p className="mt-2 text-body-sm text-fg-muted">Última atualização: 18 de julho de 2026.</p>
 
       <Section title="1. Aceitação dos termos">
@@ -135,7 +130,20 @@ export default function TermosPage() {
         </p>
       </Section>
 
-      <Section title="12. Contato">
+      <Section title="12. Banco de Talentos">
+        <p>
+          Ao criar uma conta na Plataforma — gratuita ou paga — ou ao se candidatar a uma vaga
+          divulgada pela Ryze, você passa a integrar o nosso banco de talentos. Isso significa que
+          seus dados de contato e perfil profissional (nome, e-mail, telefone, cargo desejado,
+          habilidades, resumo profissional e currículo, quando enviado) ficam disponíveis
+          internamente para que a equipe da Ryze possa considerá-lo(a) para vagas futuras, sejam
+          elas da própria Ryze ou de empresas clientes. A inclusão no banco de talentos é parte
+          integrante do serviço e não exige um consentimento separado — ela ocorre
+          automaticamente a partir do cadastro ou da candidatura, conforme o caso.
+        </p>
+      </Section>
+
+      <Section title="13. Contato">
         <p>
           Dúvidas sobre estes Termos podem ser enviadas para{" "}
           <a href="mailto:contato@ryzerh.com.br" className="text-accent-600 underline underline-offset-2 dark:text-accent-400">

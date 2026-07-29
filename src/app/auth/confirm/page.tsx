@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * Pagina intermediaria dos links de e-mail que precisam virar uma sessao
- * real (hoje: redefinicao de senha). Ela NAO consome o token sozinha - so
+ * Página intermediária dos links de e-mail que precisam virar uma sessão
+ * real (hoje: redefinição de senha). Ela NÃO consome o token sozinha — só
  * mostra os dados em campos ocultos e exige um clique real em "Confirmar"
- * (ver actions.ts). Isso evita que verificadores automaticos de e-mail
+ * (ver actions.ts). Isso evita que verificadores automáticos de e-mail
  * (ex.: Microsoft Safe Links no Outlook/Hotmail, que abrem o link sozinhos
- * pra checar se e seguro) consumam o token antes da pessoa clicar.
+ * pra checar se é seguro) consumam o token antes da pessoa clicar.
  */
 export default async function ConfirmPage({
   searchParams,
@@ -28,18 +28,18 @@ export default async function ConfirmPage({
 
   return (
     <div className="mx-auto flex max-w-md flex-col px-5 py-16">
-      <Link href="/" aria-label="Ryze — inicio" className="mx-auto">
+      <Link href="/" aria-label="Ryze — início" className="mx-auto">
         <Logo size="md" />
       </Link>
 
       <div className="mt-8 text-center">
         <ShieldCheck className="mx-auto h-8 w-8 text-accent-600 dark:text-accent-400" />
         <h1 className="mt-3 font-display text-display-md font-semibold text-fg">
-          Confirmar solicitacao
+          Confirmar solicitação
         </h1>
         <p className="mt-2 text-body-sm text-fg-muted">
-          Por seguranca, confirme que foi voce quem pediu essa acao. Isso evita que verificadores
-          automaticos de e-mail usem o link antes de voce.
+          Por segurança, confirme que foi você quem pediu essa ação. Isso evita que verificadores
+          automáticos de e-mail usem o link antes de você.
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export default async function ConfirmPage({
         ) : (
           <p className="flex items-center gap-2 rounded-md bg-error/10 px-4 py-3 text-body-sm text-error">
             <AlertCircle className="h-4 w-4 shrink-0" />
-            Link invalido ou incompleto.
+            Link inválido ou incompleto.
           </p>
         )}
       </div>

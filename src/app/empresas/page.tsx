@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Search, Users2, LineChart, GraduationCap, BrainCircuit } from "lucide-react";
+import { ArrowUpRight, Search, Users2, LineChart, GraduationCap, Film } from "lucide-react";
 import { DarkHero } from "@/components/sections/dark-hero";
 import { ResultsBand } from "@/components/sections/results-band";
 import { CtaBand } from "@/components/sections/cta-band";
@@ -23,8 +23,8 @@ const consultoriaItems = [
 ];
 
 const produtosItems = [
-  { icon: BrainCircuit, label: "Recrutamento com IA — hunting e análise automática" },
-  { icon: GraduationCap, label: "Educação Corporativa — trilhas personalizadas por IA" },
+  { icon: GraduationCap, label: "Ryze Academy — educação corporativa com IA 24/7" },
+  { icon: Film, label: "Cultura & Engajamento — escuta contínua e mentor de IA" },
 ];
 
 // Conteúdo idêntico ao antigo Home (src/app/page.tsx) — só movido pra cá e
@@ -48,9 +48,9 @@ export default function EmpresasPage() {
           </Button>
         }
         stats={[
-          { value: "10x", label: "mais rápido que a triagem manual" },
-          { value: "+40", label: "critérios avaliados por candidato" },
-          { value: "24/7", label: "IA analisando candidatos" },
+          { value: "87%", label: "do treinamento se perde em 30 dias sem reforço" },
+          { value: "+56%", label: "de turnover no Brasil — o maior do mundo" },
+          { value: "+12pp", label: "de engajamento em média, por líder Ryze" },
         ]}
       />
 

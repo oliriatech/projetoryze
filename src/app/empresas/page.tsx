@@ -37,13 +37,16 @@ export default function EmpresasPage() {
   return (
     <>
       <DarkHero
-        eyebrow="IA aplicada a RH · para empresas"
+        className="min-h-0 py-16"
+        titleSize="lg"
+        hideArrow
+        eyebrow="Consultoria + IA · para empresas"
         title={
           <>
-            O RH da sua empresa, <span className="text-gradient-ryze">turbinado por IA</span>
+            Duas frentes, <span className="text-gradient-ryze">um parceiro de RH</span>
           </>
         }
-        subtitle="Consultoria estratégica e produtos de inteligência artificial que aceleram recrutamento, cultura e desenvolvimento — para o seu time contratar melhor e mais rápido."
+        subtitle="Metodologia de RH comprovada, agora acelerada por inteligência artificial — decisões mais rápidas, resultado medido."
         primaryCta={
           <Button asChild size="lg">
             <Link href="/contato">Falar com um especialista</Link>

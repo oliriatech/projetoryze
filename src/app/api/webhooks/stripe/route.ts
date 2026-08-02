@@ -95,17 +95,38 @@ async function upsertSubscription(subscription: Stripe.Subscription) {
 // (`customer.subscription.*`) dispara sozinho quando você só reembolsa uma
 // cobrança. Só reembolso TOTAL cancela a assinatura — reembolso parcial é
 // tratado como gesto de boa vontade e não deveria cortar acesso.
+//
+// Desde a versão "basil" da API Stripe (2025-03-31), Charge não tem mais
+// campo `invoice` e Invoice não tem mais campo `payment_intent` — o elo
+// direto foi removido. O caminho atual é: Charge -> payment_intent ->
+// InvoicePayment (stripe.invoicePayments.list) -> invoice ->
+// invoice.parent.subscription_details.subscription.
 async function handleChargeRefunded(charge: Stripe.Charge, stripe: Stripe) {
   const isFullRefund = charge.amount_refunded >= charge.amount;
   if (!isFullRefund) return;
 
-  const invoiceId = typeof charge.invoice === "string" ? charge.invoice : charge.invoice?.id;
-  if (!invoiceId) return; // Cobrança avulsa, não ligada a uma assinatura — nada a cancelar.
+  const paymentIntentId =
+    typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id;
+  if (!paymentIntentId) return; // Cobrança sem PaymentIntent — nada a rastrear.
+
+  const invoicePayments = await stripe.invoicePayments.list({
+    payment: { type: "payment_intent", payment_intent: paymentIntentId },
+    limit: 1,
+  });
+  const invoicePayment = invoicePayments.data[0];
+  if (!invoicePayment) return; // Cobrança avulsa, não ligada a uma fatura — nada a cancelar.
+
+  const invoiceId =
+    typeof invoicePayment.invoice === "string" ? invoicePayment.invoice : invoicePayment.invoice?.id;
+  if (!invoiceId) return;
 
   const invoice = await stripe.invoices.retrieve(invoiceId);
-  const subscriptionId =
-    typeof invoice.subscription === "string" ? invoice.subscription : invoice.subscription?.id;
-  if (!subscriptionId) return;
+  const subscriptionRef =
+    invoice.parent?.type === "subscription_details"
+      ? invoice.parent.subscription_details?.subscription
+      : null;
+  const subscriptionId = typeof subscriptionRef === "string" ? subscriptionRef : subscriptionRef?.id;
+  if (!subscriptionId) return; // Fatura avulsa (não de assinatura) — nada a cancelar.
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
   if (subscription.status === "canceled") return; // Já cancelada — nada a fazer.

@@ -35,6 +35,7 @@ const columns = [
       { label: "Contato", href: "/contato" },
       { label: "Termos de Uso", href: "/termos" },
       { label: "Política de Privacidade", href: "/privacidade" },
+      { label: "Política de Cancelamento e Reembolso", href: "/politica-cancelamento" },
     ],
   },
 ];

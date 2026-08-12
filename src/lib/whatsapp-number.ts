@@ -12,5 +12,3 @@ export function buildContactWhatsappHref(topic: string): string {
   const message = `Olá Ryze RH, quero falar com um especialista sobre ${topic}.`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
-/** Número de WhatsApp da Ryze — único ponto de verdade, usado pelo botão flutuante e por qualquer CTA de WhatsApp no site (ex: páginas geo). */
-export const WHATSAPP_NUMBER = "5527988881302";

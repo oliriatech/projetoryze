@@ -11,6 +11,7 @@ import { DualCtaBand } from "@/components/sections/dual-cta-band";
 import { FoldStepIndicator } from "@/components/brand/fold-step-indicator";
 import { Button } from "@/components/ui/button";
 import { buildPageMetadata } from "@/lib/seo";
+import { buildContactWhatsappHref } from "@/lib/whatsapp-number";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Pesquisa de Clima Organizacional e eNPS — Ryze HR Cultura",
@@ -19,7 +20,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/produtos/cultura",
 });
 
-const CONTATO_ESPECIALISTA = "/contato?produto=cultura&intencao=especialista";
+const CONTATO_ESPECIALISTA = buildContactWhatsappHref("a pesquisa de clima organizacional da Ryze");
 const CONTATO_DEMONSTRACAO = "/contato?produto=cultura&intencao=demonstracao";
 
 export default function CulturaPage() {
@@ -35,7 +36,9 @@ export default function CulturaPage() {
         subtitle="O Brasil lidera o ranking mundial de rotatividade, o engajamento global está no menor nível desde 2020 — e cada saída evitável custa até dois salários anuais. A pergunta não é mais se a sua empresa pode investir em pesquisa de clima organizacional e engajamento. É quanto ela está perdendo por não investir direito."
         primaryCta={
           <Button asChild size="lg">
-            <Link href={CONTATO_ESPECIALISTA}>Falar com um especialista</Link>
+            <a href={CONTATO_ESPECIALISTA} target="_blank" rel="noopener noreferrer">
+              Falar com um especialista
+            </a>
           </Button>
         }
         secondaryCta={

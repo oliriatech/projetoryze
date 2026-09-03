@@ -10,7 +10,7 @@ import { DualCtaBand } from "@/components/sections/dual-cta-band";
 import { FoldStepIndicator } from "@/components/brand/fold-step-indicator";
 import { Button } from "@/components/ui/button";
 import { buildPageMetadata } from "@/lib/seo";
-import { buildContactWhatsappHref } from "@/lib/whatsapp-number";
+import { buildContactWhatsappHref, buildDemoWhatsappHref } from "@/lib/whatsapp-number";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Ryze Academy — Educação Corporativa com IA — Ryze",
@@ -20,7 +20,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 const CONTATO_ESPECIALISTA = buildContactWhatsappHref("a Ryze Academy");
-const CONTATO_DEMONSTRACAO = "/contato?produto=academy&intencao=demonstracao";
+const CONTATO_DEMONSTRACAO = buildDemoWhatsappHref("a Ryze Academy");
 
 export default function AcademyPage() {
   return (
@@ -42,7 +42,9 @@ export default function AcademyPage() {
         }
         secondaryCta={
           <Button asChild size="lg" variant="secondary">
-            <Link href={CONTATO_DEMONSTRACAO}>Agendar demonstração</Link>
+            <a href={CONTATO_DEMONSTRACAO} target="_blank" rel="noopener noreferrer">
+              Agendar demonstração
+            </a>
           </Button>
         }
       />

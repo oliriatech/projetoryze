@@ -12,3 +12,12 @@ export function buildContactWhatsappHref(topic: string): string {
   const message = `Olá Ryze RH, quero falar com um especialista sobre ${topic}.`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
+
+/**
+ * Mesma lógica do buildContactWhatsappHref, mas para os CTAs "Agendar
+ * demonstração" — que também apontavam pro /contato quebrado (2026-09-03).
+ */
+export function buildDemoWhatsappHref(topic: string): string {
+  const message = `Olá Ryze RH, quero agendar uma demonstração de ${topic}.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}

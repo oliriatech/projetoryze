@@ -11,7 +11,7 @@ import { DualCtaBand } from "@/components/sections/dual-cta-band";
 import { FoldStepIndicator } from "@/components/brand/fold-step-indicator";
 import { Button } from "@/components/ui/button";
 import { buildPageMetadata } from "@/lib/seo";
-import { buildContactWhatsappHref } from "@/lib/whatsapp-number";
+import { buildContactWhatsappHref, buildDemoWhatsappHref } from "@/lib/whatsapp-number";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Pesquisa de Clima Organizacional e eNPS — Ryze HR Cultura",
@@ -21,7 +21,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 const CONTATO_ESPECIALISTA = buildContactWhatsappHref("a pesquisa de clima organizacional da Ryze");
-const CONTATO_DEMONSTRACAO = "/contato?produto=cultura&intencao=demonstracao";
+const CONTATO_DEMONSTRACAO = buildDemoWhatsappHref("a pesquisa de clima organizacional da Ryze");
 
 export default function CulturaPage() {
   return (
@@ -43,7 +43,9 @@ export default function CulturaPage() {
         }
         secondaryCta={
           <Button asChild size="lg" variant="secondary">
-            <Link href={CONTATO_DEMONSTRACAO}>Agendar demonstração</Link>
+            <a href={CONTATO_DEMONSTRACAO} target="_blank" rel="noopener noreferrer">
+              Agendar demonstração
+            </a>
           </Button>
         }
       />

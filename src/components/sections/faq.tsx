@@ -1,8 +1,11 @@
+import type { ReactNode } from "react";
 import { Plus } from "lucide-react";
 
 export interface FaqItem {
   question: string;
-  answer: string;
+  /** Normalmente uma string; aceita ReactNode pra casos em que a resposta
+   * precisa interpolar outro elemento, não só texto puro. */
+  answer: ReactNode;
 }
 
 /**
